@@ -1,16 +1,18 @@
-#!/usr/bin/env ruby -wKU
+#!/usr/bin/env ruby
 require 'rubygems'
 require 'twitter'
 require 'yaml'
 require 'json'
 
+PATH_PREFIX = File.expand_path(File.dirname(__FILE__))
+
 config = YAML.parse(File.read("creds.yml"))
 
-%w{consumer_key consumer_secret access_token access_token_secret path_prefix}.each do |key|
+%w{consumer_key consumer_secret access_token access_token_secret}.each do |key|
   Object.const_set(key.upcase, config["config"][key].value)
 end
 
-highestcount = File.read(PATH_PREFIX + "highest")
+highestcount = File.read(PATH_PREFIX + "/highest")
 
 oauth = Twitter::OAuth.new(CONSUMER_KEY, CONSUMER_SECRET)
 oauth.authorize_from_access(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)

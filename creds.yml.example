@@ -3,5 +3,4 @@ config:
   consumer_secret: 1234
   access_token: 1234
   access_token_secret: 1234
-  path_prefix: your/path/here
   
