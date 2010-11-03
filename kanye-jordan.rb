@@ -6,7 +6,7 @@ require 'json'
 
 PATH_PREFIX = File.expand_path(File.dirname(__FILE__))
 
-config = YAML.parse(File.read("creds.yml"))
+config = YAML.parse(File.read(PATH_PREFIX + "/creds.yml"))
 
 %w{consumer_key consumer_secret access_token access_token_secret}.each do |key|
   Object.const_set(key.upcase, config["config"][key].value)
@@ -27,6 +27,6 @@ tweets.reverse.each do |tweet|
   end
   client.update(newtext)
   highestcount = tweet.id
-  File.open(PATH_PREFIX + "highest", "w") {|f| f.write(highestcount)}
+  File.open(PATH_PREFIX + "/highest", "w") {|f| f.write(highestcount)}
 end
 
