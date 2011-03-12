@@ -14,18 +14,21 @@ end
 
 highestcount = File.read(PATH_PREFIX + "/highest")
 
-oauth = Twitter::OAuth.new(CONSUMER_KEY, CONSUMER_SECRET)
-oauth.authorize_from_access(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
-client = Twitter::Base.new(oauth)
+Twitter.configure do |config|
+  config.consumer_key = CONSUMER_KEY
+  config.consumer_secret = CONSUMER_SECRET
+  config.oauth_token = ACCESS_TOKEN
+  config.oauth_token_secret = ACCESS_TOKEN_SECRET
+end
 
-tweets = client.user_timeline(:screen_name => "kanyewest", :count => 50, :since_id => highestcount)
+tweets = Twitter.user_timeline(:screen_name => "kanyewest", :count => 50, :since_id => highestcount)
 
 tweets.reverse.each do |tweet|
   newtext = "Liz Lemon, #{tweet.text}"
   if newtext.size > 140
     newtext = newtext[0,137] + "..."
   end
-  client.update(newtext)
+  Twitter.update(newtext)
   highestcount = tweet.id
   File.open(PATH_PREFIX + "/highest", "w") {|f| f.write(highestcount)}
 end
