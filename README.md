@@ -10,6 +10,6 @@ Configuration
 
 * Fill out your own creds.yml with the Twitter OAuth credentials you've acquired when you created an application on (developer.twitter.com)
 * Put all these files on a server.
-* Make a blank textfile called "highest" in the directory with these files. It needs to be writable by whatever account is going to run this script.
+* run migration.rb to create a sqlite database
 * Run kanye-jordan.rb (or whatever your file is called) periodically. It will make tweets.
 * That's it.
