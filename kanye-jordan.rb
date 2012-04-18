@@ -1,8 +1,7 @@
 #!/usr/bin/env ruby
-require 'rubygems'
-require 'twitter'
-require 'yaml'
-require 'json'
+require "rubygems"
+require "bundler/setup"
+Bundler.require(:default)
 
 PATH_PREFIX = File.expand_path(File.dirname(__FILE__))
 
