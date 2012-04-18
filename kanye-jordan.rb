@@ -11,7 +11,14 @@ config = YAML.parse(File.read(PATH_PREFIX + "/creds.yml"))
   Object.const_set(key.upcase, config["config"][key].value)
 end
 
-highestcount = File.read(PATH_PREFIX + "/highest")
+DB = Sequel.sqlite("#{File.dirname(__FILE__)}/kanye_jordan.db")
+
+highest_tweet = DB[:read_tweets].order(:id).last
+if highest_tweet
+  highest_tweet_id = highest_tweet[:id].to_i
+else
+  highest_tweet_id =1 
+end
 
 Twitter.configure do |config|
   config.consumer_key = CONSUMER_KEY
@@ -27,7 +34,7 @@ tweets.reverse.each do |tweet|
     newtext = newtext[0,137] + "..."
   end
   Twitter.update(newtext)
-  highestcount = tweet.id
-  File.open(PATH_PREFIX + "/highest", "w") {|f| f.write(highestcount)}
+  #puts tweet.id.to_s + ": " + newtext
+  DB[:read_tweets].insert(:id => tweet.id,
+                          :created_at => Time.now)
 end
-
