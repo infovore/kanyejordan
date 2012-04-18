@@ -27,7 +27,7 @@ Twitter.configure do |config|
   config.oauth_token_secret = ACCESS_TOKEN_SECRET
 end
 
-tweets = Twitter.user_timeline(:user => "kanyewest", :count => 50, :since_id => highestcount.to_i)
+tweets = Twitter.user_timeline("kanyewest", :count => 50, :since_id => highest_tweet_id)
 tweets.reverse.each do |tweet|
   newtext = "Liz Lemon, #{tweet.text}"
   if newtext.size > 140
